@@ -1,0 +1,14 @@
+1- select pessoa.nome , evento.evento From pessoa, evento WHERE pessoa.id_pessoa = evento.id_pessoa_fk
+2- select pessoa.nome From pessoa WHERE pessoa.nome like '%Doe%'
+3- INSERT INTO `evento` (`id_evento`, `evento`, `id_pessoa_fk`) VALUES (NULL, 'Evento F', '5');
+4- UPDATE evento SET evento.id_pessoa_fk = 1 WHERE id_evento = 4
+5- DELETE FROM `evento` WHERE `evento`.`id_evento` = 2;
+6- delete from pessoa where pessoa.id_pessoa in (SELECT P.id_pessoa FROM pessoa P WHERE NOT EXISTS (SELECT * From evento E WHERE P.id_pessoa = E.id_pessoa_fk))
+7- ALTER TABLE pessoa ADD idade int
+8- CREATE TABLE tabela_telefone  
+   (id_telefone int PRIMARY KEY NOT NULL,  
+   telefone varchar(200) ,  
+   pessoa_id int,
+   CONSTRAINT pessoa_id_fk FOREIGN KEY (pessoa_id) REFERENCES pessoa (id_pessoa));
+9- alter table tabela_telefone add constraint unique_telefone unique(telefone);
+10-DROP TABLE tabela_telefone
