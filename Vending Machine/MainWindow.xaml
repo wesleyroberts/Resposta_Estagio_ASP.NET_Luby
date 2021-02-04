@@ -1,0 +1,86 @@
+﻿<Window x:Class="Vending_Machine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Vending_Machine" xmlns:viewmodels="clr-namespace:Vending_Machine.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MachineViewModel}"
+        mc:Ignorable="d"
+        Title="Vending Machine" Height="600" Width="500">
+    <Grid Background="BlueViolet">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel  Background="GreenYellow" Grid.ColumnSpan="5">
+            <TextBlock Style="{StaticResource TitleBlock}">Drinks Machine</TextBlock>
+        </StackPanel>
+        <ListView Style="{StaticResource VendingList}" ItemsSource="{ Binding Items}" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="4" SelectionChanged="ListView_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel>
+                        <Button DataContext="{Binding}"  Style="{StaticResource VedingButton}" DockPanel.Dock="Left" Click="Purchase_Clicked">
+                            Comprar
+                        </Button>
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock Style="{StaticResource CustumeLabel}" Text="{Binding information.Name}"/>
+                            <TextBlock Style="{StaticResource CustumeLabel}" Text="{Binding information.Price, StringFormat=${0:0.00}}"/>
+                            <TextBlock Foreground="Red" Text="Fora de estoque!" Visibility="{Binding OutOfStockMessage}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Style="{StaticResource MoneyButton}" FontSize="20" Grid.Row="5" Click="Insert25_Clicked">
+            $ 0,25
+        </Button>
+        <Button  Style="{StaticResource MoneyButton}" FontSize="20" Grid.Row="5" Grid.Column="1" Click="Insert50_Clicked">
+            $ 0,50
+        </Button>
+        <Button Style="{StaticResource MoneyButton}" FontSize="20" Grid.Row="5" Grid.Column="2" Click="Insert1real_Clicked">
+            $ 1,00
+        </Button>
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="3">
+            <TextBlock Style="{StaticResource CustumeLabel}" Text="{Binding Bank.Inserted, StringFormat=Inserido ${0:0.00}}"/>
+            <TextBlock Style="{StaticResource CustumeLabel}" Text="{Binding Bank.Change, StringFormat=Troco ${0:0.00}}"/>
+        </StackPanel>
+        <DockPanel Margin="5" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="BlanchedAlmond">
+            <TextBlock DockPanel.Dock="Bottom" Style="{StaticResource CustumeLabel}" Text="{Binding Bank.BankTotal, StringFormat= Ganhos ${0:0.00}}"/>
+            <TextBlock DockPanel.Dock="Top" FontSize="26" Style="{StaticResource CustumeLabel}" HorizontalAlignment="Center">
+                Produtos
+            </TextBlock>
+            <StackPanel DockPanel.Dock="Bottom">
+                <TextBlock Margin="5" Style="{StaticResource CustumeLabel}" FontSize="16" Text="{Binding Items[0].InventoryDisplay}"/>
+                <TextBlock Margin="5"  Style="{StaticResource CustumeLabel}" FontSize="16" Text="{Binding Items[1].InventoryDisplay}"/>
+                <TextBlock Margin="5"  Style="{StaticResource CustumeLabel}" FontSize="16" Text="{Binding Items[2].InventoryDisplay}"/>
+                <TextBlock Margin="5"  Style="{StaticResource CustumeLabel}" FontSize="16" Text="{Binding Items[3].InventoryDisplay}"/>
+                <TextBlock Margin="5"  Style="{StaticResource CustumeLabel}" FontSize="16" Text="{Binding Items[4].InventoryDisplay}"/>
+            </StackPanel>
+        </DockPanel>
+        <StackPanel Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="DarkKhaki">
+            <TextBlock DockPanel.Dock="Top" FontSize="26" Style="{StaticResource CustumeLabel}" HorizontalAlignment="Center">
+                Manager
+            </TextBlock>
+            <Button Style="{StaticResource ManagerBotton}" Click="Refill_Clicked">
+                Reabastecer estoque
+            </Button>
+            <Button Style="{StaticResource ManagerBotton}" Click="Empty_Clicked">
+                Esvaziar estoque 
+            </Button>
+            <Button Style="{StaticResource ManagerBotton}" Click="withdraw_Clicked">
+                retirar o pagamento
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
